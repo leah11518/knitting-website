@@ -1,11 +1,12 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--color-foreground);
   background-color: #242424;
 
   font-synthesis: none;
@@ -25,10 +26,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  min-width: 100vw;
   min-height: 100vh;
+  color: var(--color-foreground);
 }
 
 h1 {
@@ -55,10 +55,66 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+@layer base {
+  :root {
+    /* Backgrounds */
+    --background: #f6ecef;
+    --surface: #edbfc6;
+    --border: #d8b2b8;
+
+    /* Text */
+    --foreground: #260c1a;
+    --muted: #5f4842;
+
+    /* Primary */
+    --primary: #432e36;
+    --primary-fg: #f6ecef;
+
+    /* Secondary */
+    --secondary: #af8d86;
+    --secondary-fg: #260c1a;
+
+    /* Accent */
+    --accent: #edbfc6;
+    --accent-fg: #260c1a;
+
+    /* Destructive */
+    --destructive: #c65a73;
+    --destructive-fg: #f6ecef;
+  }
+
+  .dark {
+    /* Backgrounds */
+    --background: #1c0a14;
+    --surface: #260c1a;
+    --border: #432e36;
+
+    /* Text */
+    --foreground: #f2e6e9;
+    --muted: #af8d86;
+
+    /* Primary */
+    --primary: #edbfc6;
+    --primary-fg: #1c0a14;
+
+    /* Secondary */
+    --secondary: #8e6e68;
+    --secondary-fg: #f2e6e9;
+
+    /* Accent */
+    --accent: #5f4842;
+    --accent-fg: #f2e6e9;
+
+    /* Destructive */
+    --destructive: #d46a82;
+    --destructive-fg: #1c0a14;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--foreground);
+    background-color: var(--background);
   }
   a:hover {
     color: #747bff;

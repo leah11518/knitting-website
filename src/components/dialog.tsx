@@ -51,11 +51,6 @@ export const CustomDialog: React.FC<CustomDialogProps> = ({
           <CustomButton
             disabled={isConfirmDisabled || false}
             onClick={onConfirm}
-            sx={{
-              backgroundColor: "var(--primary)",
-              color: "var(--primary-fg)",
-              "&:hover": { backgroundColor: "var(--primary)/80" },
-            }}
           >
             {confirmText}
           </CustomButton>

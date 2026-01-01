@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Pattern = {
+  id: string; // unique identifier for routing
+  name: string;
   filePath: string;
   yoke: number;
   body: number;
@@ -17,9 +19,16 @@ const initialState: Pattern[] = [];
 const patternSlice = createSlice({
   name: "pattern",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    addPattern: (state, action: PayloadAction<Pattern>) => {
+      state.push(action.payload);
+    },
+    removePattern: (state, action: PayloadAction<string>) => {
+      return state.filter((pattern) => pattern.id !== action.payload);
+    },
+  },
 });
 
-// export const { usePattern } = patternSlice.actions;
+export const { addPattern, removePattern } = patternSlice.actions;
 
 export default patternSlice.reducer;

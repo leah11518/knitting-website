@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css"; // Optional: global styles
 import { Navbar } from "./navbar";
-import { Patterns } from "./pages/patterns/add-patterns";
+import { Patterns } from "./pages/patterns/pattern-page";
 
 export default function App() {
   return (

@@ -36,6 +36,7 @@ export default function PatternForm({ pattern }) {
               <Input
                 type="number"
                 max={value}
+                min={0}
                 value={inputs[key]}
                 placeholder={`Max ${value}`}
                 className="ml-2 border rounded px-2 py-1"

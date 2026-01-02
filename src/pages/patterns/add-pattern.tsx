@@ -7,6 +7,7 @@ import Input from "../../components/input";
 import { useDispatch } from "react-redux";
 import { addPattern } from "../../redux/pattern-slice";
 import { v4 as uuidv4 } from "uuid";
+import { uploadToCloudinary } from "../../toolbox/uploadToCloudinary";
 
 type PatternInfoProps = {
   label: string;
@@ -42,6 +43,8 @@ export const AddPattern = () => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [file, setFile] = useState<File | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
 
   const [patternValues, setPatternValues] = useState<Record<string, string>>(
     Object.fromEntries(patterns.map((p) => [p, ""]))
@@ -51,10 +54,21 @@ export const AddPattern = () => {
     hiddenFileInput.current?.click();
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (files && files.length === 1) {
-      setFile(files[0]);
+    if (!files || files.length !== 1) return;
+
+    const selectedFile = files[0];
+    setFile(selectedFile);
+    setUploading(true);
+
+    try {
+      const result = await uploadToCloudinary(selectedFile);
+      setUploadedImage(result);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -73,12 +87,11 @@ export const AddPattern = () => {
 
   const onConfirm = () => {
     if (!file) return;
-
     const defaultName = file.name.replace(/\.[^/.]+$/, "");
     const newPattern = {
       id: uuidv4(),
       name: defaultName,
-      filePath: URL.createObjectURL(file),
+      filePath: uploadedImage.public_id,
       yoke: Number(patternValues.yoke),
       body: Number(patternValues.body),
       ribbing: Number(patternValues.ribbing),

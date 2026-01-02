@@ -4,12 +4,13 @@ import storage from "redux-persist/lib/storage";
 import patternReducer from "./pattern-slice";
 
 const rootReducer = combineReducers({
-  user: patternReducer,
+  pattern: patternReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["pattern"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -33,4 +34,4 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export const usePatterns = () => useAppSelector((state) => state.user);
+export const usePatterns = () => useAppSelector((state) => state.pattern);
